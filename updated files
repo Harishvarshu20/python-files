@@ -1,0 +1,33 @@
+def read_master_file(master_file):
+    students = {}
+    with open(master_file, 'r') as file:
+        for line in file:
+            roll_number, name = line.strip().split(',')
+            students[roll_number] = name
+    return students
+
+def process_transaction_file(transaction_file, students):
+    with open(transaction_file, 'r') as file:
+        for line in file:
+            roll_number, action = line.strip().split(',')
+            if action == 'A':  # Add student
+                name = input(f"Enter the name for roll number {roll_number}: ")
+                students[roll_number] = name
+            elif action == 'D':  # Delete student
+                if roll_number in students:
+                    del students[roll_number]
+
+def write_updated_file(updated_file, students):
+    sorted_students = sorted(students.items(), key=lambda x: int(x[0]))
+    with open(updated_file, 'w') as file:
+        for roll_number, name in sorted_students:
+            file.write(f"{roll_number},{name}\n")
+
+if __name__ == "__main__":
+    master_file = 'master_file.txt' 
+    transaction_file = 'transaction_file.txt'  
+    updated_file = 'updated_file.txt' 
+
+    students = read_master_file(master_file)
+    process_transaction_file(transaction_file, students)
+    write_updated_file(updated_file, students)
