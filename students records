@@ -1,0 +1,11 @@
+def read_student_records(file_path):
+    with open(file_path, 'r') as file:
+        records = [line.strip().split() for line in file]
+    return [(record[0], int(record[1])) for record in records]
+
+def sort_records_by_name(records):
+    return sorted(records, key=lambda record: record[0])
+
+def display_records(records):
+    for name, age in records:
+        print(f"Name: {name}, Age: {age}")
