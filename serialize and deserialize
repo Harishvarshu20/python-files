@@ -1,0 +1,29 @@
+import pickle
+from datetime import datetime
+
+class Employee:
+    def __init__(self, employee_code, employee_name, date_of_joining, salary):
+        self.employee_code = employee_code
+        self.employee_name = employee_name
+        self.date_of_joining = date_of_joining
+        self.salary = salary
+
+    def __repr__(self):
+        return (f"Employee(employee_code={self.employee_code}, "
+                f"employee_name={self.employee_name}, "
+                f"date_of_joining={self.date_of_joining}, "
+                f"salary={self.salary})")
+def serialize_employee(employee, file_path):
+    with open(file_path, 'wb') as file:
+        pickle.dump(employee, file)
+def deserialize_employee(file_path):
+    with open(file_path, 'rb') as file:
+        return pickle.load(file)
+
+if __name__ == "__main__":
+    emp = Employee("E123", "John Doe", datetime(2020, 5, 1), 50000)
+    file_path = 'employee.pkl'
+    serialize_employee(emp, file_path)
+    print(f"Serialized {emp}")
+    deserialized_emp = deserialize_employee(file_path)
+    print(f"Deserialized {deserialized_emp}")
