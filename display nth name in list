@@ -1,0 +1,24 @@
+def write_names_to_file(names, file_path):
+    with open(file_path, 'w') as file:
+        for name in names:
+            file.write(f"{name}\n")
+
+def display_nth_name(file_path, n):
+    with open(file_path, 'r') as file:
+        names = file.readlines()
+        if 1 <= n <= len(names):
+            print(f"The {n}th name in the list is: {names[n - 1].strip()}")
+        else:
+            print("Invalid input. Please enter a valid position.")
+
+if __name__ == "__main__":
+    names = ['Alice', 'Bob', 'Charlie', 'David', 'Eve']
+    file_path = 'student_names.txt'
+    
+    write_names_to_file(names, file_path)
+    
+    try:
+        n = int(input("Enter the position of the name you want to display: "))
+        display_nth_name(file_path, n)
+    except ValueError:
+        print("Invalid input. Please enter a valid number.")
